@@ -17,17 +17,31 @@ module Danger
   # @tags monday, weekends, time, rattata
   #
   class DangerYamlint < Plugin
+    def lint
+      broken_yaml = {}
 
-    # An attribute that you can read/write from your Dangerfile
-    #
-    # @return   [Array<String>]
-    attr_accessor :my_attribute
+      changed_files.each do |file|
+        next unless File.readable?(file)
+        next unless (file.end_with?('.yaml') || file.end_with?('.yml'))
 
-    # A method that you can call from your Dangerfile
-    # @return   [Array<String>]
-    #
-    def warn_on_mondays
-      warn 'Trying to merge code on a Monday' if Date.today.wday == 1
+        begin
+          YAML.load_file file
+        rescue StandardError => e
+          broken_yaml.merge!({ "#{file}" => e.message })
+        end
+      end
+
+      unless broken_yaml.empty?
+        fail("YAML formatting is not valid for these files:
+              #{broken_yaml.map { |file, msg| "**#{file}**: #{msg}" }.join('<br/>')}
+             ")
+      end
+    end
+
+    private
+
+    def changed_files
+      (git.modified_files + git.added_files)
     end
   end
 end

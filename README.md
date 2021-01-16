@@ -1,15 +1,15 @@
 # danger-yamlint
 
-A description of danger-yamlint.
+A no-dependency Danger plugin to lint yaml files.
 
 ## Installation
 
     $ gem install danger-yamlint
 
 ## Usage
+Add this line to your Dangerfile
 
-    Methods and attributes from this plugin are available in
-    your `Dangerfile` under the `yamlint` namespace.
+    yamlint.lint
 
 ## Development
 
