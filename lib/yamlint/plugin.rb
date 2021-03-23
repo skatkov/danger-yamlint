@@ -25,16 +25,21 @@ module Danger
         next unless (file.end_with?('.yaml') || file.end_with?('.yml'))
 
         begin
-          YAML.load_file file
+          # Detect fixtures, they could contain ERB code.
+          if file.start_with?('test/fixtures/')
+            YAML.load(ERB.new(File.read(file)).result)
+          else
+            YAML.load_file file
+          end
         rescue StandardError => e
-          broken_yaml.merge!({ "#{file}" => e.message })
+          broken_yaml.merge!({"#{file}" => e.message})
         end
       end
 
       unless broken_yaml.empty?
         fail("YAML formatting is not valid for these files:
               #{broken_yaml.map { |file, msg| "**#{file}**: #{msg}" }.join('<br/>')}
-             ")
+        ")
       end
     end
 
