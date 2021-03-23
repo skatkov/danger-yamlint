@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Yamlint::VERSION
   spec.authors       = ['Stanislav Katkov']
   spec.email         = ['sk@skylup.com']
-  spec.description   = "A no-dependency Danger plugin to lint yaml files"
+  spec.description   = "A no-dependency Danger plugin to lint yaml files and fixtures"
   spec.summary       = "Simple Ruby powered YAML validator"
   spec.homepage      = 'https://github.com/skatkov/danger-yamlint'
   spec.license       = 'MIT'
