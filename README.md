@@ -1,6 +1,6 @@
 # danger-yamlint
 
-A no-dependency Danger plugin to lint yaml files.
+A no-dependency Danger plugin to lint yaml files and fixtures.
 
 ## Installation
 
