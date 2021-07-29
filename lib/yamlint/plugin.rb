@@ -26,7 +26,7 @@ module Danger
 
         begin
           # Detect fixtures, they could contain ERB code.
-          if file.start_with?('test/fixtures/')
+          if file.include?('/fixtures/')
             YAML.load(ERB.new(File.read(file)).result)
           else
             YAML.load_file file
